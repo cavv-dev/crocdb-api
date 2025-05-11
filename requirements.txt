@@ -1,0 +1,3 @@
+flask
+unidecode
+Flask-Limiter[memcached]
