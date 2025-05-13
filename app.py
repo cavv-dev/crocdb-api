@@ -35,13 +35,12 @@ def handle_error(e):
     """Handle uncaught exceptions and return a standardized error response."""
     code = getattr(e, 'code', 500)
 
-    if app.debug and code == 500:
-        raise e
+    if code == 500:
+        if app.debug:
+            raise e
+        app.logger.error(e)
 
-    message = HTTPStatus(
-        code).phrase if code in HTTPStatus._value2member_map_ else "An error occurred"
-
-    return api.build_response({'error': message}), code
+    return api.build_response({'error': HTTPStatus(code).phrase}), code
 
 
 @app.errorhandler(429)
