@@ -66,7 +66,10 @@ def validate_payload(required_fields, data, field_types=None):
 @app.route('/search', methods=['POST'])
 def search():
     """API endpoint to perform a search with filters."""
-    data = request.get_json(silent=True) or {}
+    try:
+        data = request.get_json(force=True)
+    except Exception:
+        return api.build_response({'error': 'Malformed JSON in request body'}), 400
 
     validation_error = validate_payload(
         [],
@@ -103,7 +106,11 @@ def search():
 @app.route('/entry', methods=['POST'])
 def entry():
     """API endpoint to retrieve a specific entry by slug."""
-    data = request.get_json(silent=True) or {}
+    try:
+        data = request.get_json(force=True)
+    except Exception:
+        return api.build_response({'error': 'Malformed JSON in request body'}), 400
+
     validation_error = validate_payload(
         ['slug'],
         data,
