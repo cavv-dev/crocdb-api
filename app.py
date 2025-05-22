@@ -69,7 +69,7 @@ def search():
     try:
         data = request.get_json(force=True)
     except Exception:
-        return api.build_response({'error': 'Malformed JSON in request body'}), 400
+        return api.build_response({'error': "Malformed JSON in request body"}), 400
 
     validation_error = validate_payload(
         [],
@@ -109,7 +109,7 @@ def entry():
     try:
         data = request.get_json(force=True)
     except Exception:
-        return api.build_response({'error': 'Malformed JSON in request body'}), 400
+        return api.build_response({'error': "Malformed JSON in request body"}), 400
 
     validation_error = validate_payload(
         ['slug'],
